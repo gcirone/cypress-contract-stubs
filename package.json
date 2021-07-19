@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Cypress plugin for Spring Contract Stubs",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "repository": "https://github.com/gcirone/cypress-contract-stubs.git",
   "author": "Gianluca Cirone <gianluca.cirone@gmail.com>",
   "license": "MIT",
@@ -16,17 +17,26 @@
     "stub"
   ],
   "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "clean": "rm -rf dist/*",
     "tsc": "tsc -p tsconfig.json",
-    "tsc:watch": "tsc -p tsconfig.json --watch",
-    "build:clean": "rm -rf dist/*",
+    "copy": "cpx \"{package.json,README.md,LICENSE}\" dist/publish",
+    "build": "run-s lint clean tsc copy",
+    "build:watch": "run-p \"tsc --watch\" \"copy --watch --verbose\"",
     "lint": "eslint --ext .js,.ts src",
     "format:write": "prettier --write src",
     "format:check": "prettier --check src",
     "prepare": "husky install"
   },
+  "dependencies": {
+
+  },
   "devDependencies": {
+    "@types/node": "^16.3.3",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
+    "cpx": "^1.5.0",
     "cypress": "^7.7.0",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",

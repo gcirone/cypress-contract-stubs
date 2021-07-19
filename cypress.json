@@ -1,0 +1,21 @@
+{
+  "env": {
+    "stubs": [
+      {
+        "id": "internal.sports:event-api-rest-webapp:3.58-bce9ebf:stubs",
+        "mode": "remote",
+        "type": "nexus",
+        "server": "https://repo.latitc.corp-apps.com",
+        "repository": "maven-int-latitc"
+      },
+      {
+        "file": "sports-event-api-rest-webapp-stubs.jar",
+        "mode": "file",
+        "path": "dist/stubs"
+      }
+    ]
+  },
+  "video": false,
+  "viewportHeight": 720,
+  "viewportWidth": 1280
+}
