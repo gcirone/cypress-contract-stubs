@@ -5,5 +5,5 @@
     "noEmitOnError": true,
     "allowJs": true
   },
-  "include": ["cypress/**/*.ts"]
+  "include": ["**/*.ts"]
 }

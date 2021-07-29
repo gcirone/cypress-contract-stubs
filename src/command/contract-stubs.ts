@@ -1,3 +1,5 @@
+import { StubEntries } from '../plugin/archive/archive-entry-model';
+
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
@@ -10,15 +12,30 @@ declare global {
     }
 
     interface Chainable {
-      contractStub: typeof contractStub;
+      contractStubs: typeof contractStubs;
+      // contractStub: typeof contractStub;
     }
   }
 }
 
-export function contractStub(options: Cypress.StubOptions): void {
-  console.log('contractStub', options);
+export function contractStubs(): Cypress.Chainable<StubEntries> {
+  return cy.task<StubEntries>('contract:stubs', null, { log: false }).then((stubs) => {
+    Cypress.log({
+      name: 'contractStubs',
+      displayName: 'stubs',
+      type: 'parent',
+      message: [`${stubs.length} stubs entries`],
+      consoleProps: () => ({ stubs })
+    });
+
+    return stubs;
+  });
 }
 
-export function contractStubCommands(): void {
-  Cypress.Commands.add('contractStub', contractStub);
+// export function contractStub(options: Cypress.StubOptions): Cypress.Chainable<StubEntry> {
+//
+// }
+
+export function contractStubsCommands(): void {
+  Cypress.Commands.add('contractStubs', contractStubs);
 }
