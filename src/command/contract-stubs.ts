@@ -36,6 +36,4 @@ export function contractStubs(): Cypress.Chainable<StubEntries> {
 //
 // }
 
-export function contractStubsCommands(): void {
-  Cypress.Commands.add('contractStubs', contractStubs);
-}
+Cypress.Commands.add('contractStubs', contractStubs);

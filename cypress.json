@@ -1,17 +1,27 @@
 {
   "env": {
+    "stubs_cache": "node_modules/.cache/stubs2",
+    "stubs_server": "https://repo.latitc.corp-apps.com",
+    "stubs_repository": "maven-proxy-mal",
     "stubs": [
       {
         "mode": "remote",
-        "id": "internal.sports:event-api-rest-webapp:3.58-bce9ebf:stubs",
+        "id": "internal.sports.contracts:sports-translations-api:+:stubs",
         "type": "nexus",
         "server": "https://repo.latitc.corp-apps.com",
-        "repository": "maven-int-latitc"
+        "repository": "maven-proxy-mal"
+      },
+      {
+        "mode": "remote",
+        "id": "internal.sports.contracts:sports-feed-mapping-api:+:stubs",
+        "type": "nexus",
+        "server": "https://repo.latitc.corp-apps.com",
+        "repository": "maven-proxy-mal"
       },
       {
         "mode": "file",
         "file": "event-api-rest-webapp-stubs.jar",
-        "path": ".stubs"
+        "path": "cypress/fixtures"
       }
     ]
   },

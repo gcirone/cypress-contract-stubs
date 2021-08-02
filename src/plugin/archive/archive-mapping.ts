@@ -23,5 +23,5 @@ export async function archiveMapping(archivePath: string): Promise<StubEntries> 
       return stub;
     });
 
-  return await Promise.all(entries);
+  return Promise.all(entries);
 }

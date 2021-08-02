@@ -19,7 +19,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "cypress-contract-stubs": ["src/index.ts"]
+      "cypress-contract-stubs": ["src/index.ts"],
+      "cypress-contract-stubs/command": ["src/command.ts"]
     }
   },
   "include": ["src"]

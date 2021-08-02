@@ -13,7 +13,4 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-import { contractStubsCommands } from 'cypress-contract-stubs';
-
-// Initialize stub commands
-contractStubsCommands();
+import 'cypress-contract-stubs/command';

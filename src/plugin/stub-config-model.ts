@@ -1,13 +1,15 @@
+export type StubConfigMode = 'remote' | 'local' | 'file';
+
 export interface RemoteStubConfig {
-  mode?: 'remote';
-  id?: string;
+  mode: StubConfigMode;
+  id: string;
   type?: 'nexus';
-  server?: string;
-  repository?: string;
+  server: string;
+  repository: string;
 }
 
 export interface FileStubConfig {
-  mode?: 'file';
+  mode: StubConfigMode;
   file: string;
   path: string;
 }
