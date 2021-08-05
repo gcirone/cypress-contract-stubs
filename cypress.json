@@ -1,6 +1,6 @@
 {
   "env": {
-    "stubs_cache": "node_modules/.cache/stubs2",
+    "stubs_cache": "node_modules/.cache/stubs",
     "stubs_server": "https://repo.latitc.corp-apps.com",
     "stubs_repository": "maven-proxy-mal",
     "stubs": [

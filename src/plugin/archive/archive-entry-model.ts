@@ -5,8 +5,8 @@ export interface ArchiveEntry {
 
 export interface StubEntry {
   id: string;
-  request: Record<string, unknown>;
-  response: Record<string, unknown>;
+  request: Record<string, any>;
+  response: Record<string, any>;
   uuid: string;
   name: string;
 }

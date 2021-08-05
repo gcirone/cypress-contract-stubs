@@ -2,11 +2,12 @@ import { RemoteStubConfig } from '../stub-config-model';
 
 /**
  * Nexus Repository Manager 3
+ *
  * https://help.sonatype.com/repomanager3/rest-and-integration-api/search-api
  * @param config
  * @param env
  */
-export function nexus3Url(config: RemoteStubConfig, env: Record<string, any>): string {
+export function nexus3Url(config: RemoteStubConfig, env: Record<string, string>): string {
   const [group, artifact, version, classifier] = config.id.split(':');
   const endpoint = env.stubs_nexus3_endpoint || 'service/rest/v1/search/assets';
 

@@ -7,4 +7,10 @@ describe('Contract Stubs', () => {
       expect(stubs.length).to.be.at.least(3);
     });
   });
+
+  it('should get stub by name', () => {
+    cy.contractStub({ name: 'getStreamConfig' }).should((stub) => {
+      expect(stub.response.body.defaultOffset).to.eq(15);
+    });
+  });
 });
