@@ -22,6 +22,10 @@
         "mode": "file",
         "file": "event-api-rest-webapp-stubs.jar",
         "path": "cypress/fixtures"
+      },
+      {
+        "mode": "file",
+        "file": "sports-site-config-1.318-SNAPSHOT-stubs.jar"
       }
     ]
   },

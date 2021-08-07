@@ -9,7 +9,7 @@ import { promisify } from 'util';
  * @param archivePath A valid path for the file.
  * @param entry An json archive entry
  */
-async function readJsonMapping(archivePath: string, entry: ArchiveEntry): Promise<StubEntry> {
+async function readJsonContent(archivePath: string, entry: ArchiveEntry): Promise<StubEntry> {
   const fileContent = await promisify(readFile)(archivePath, entry.path);
 
   const stub = JSON.parse(fileContent.toString());
@@ -32,7 +32,7 @@ async function readJsonMapping(archivePath: string, entry: ArchiveEntry): Promis
 export async function archiveMapping(archivePath: string): Promise<StubEntries> {
   const entries = (await promisify(list)(archivePath))
     .filter((entry: ArchiveEntry) => extname(entry.path) === '.json')
-    .map((entry: ArchiveEntry) => readJsonMapping(archivePath, entry));
+    .map((entry: ArchiveEntry) => readJsonContent(archivePath, entry));
 
   return Promise.all(entries);
 }

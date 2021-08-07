@@ -4,6 +4,8 @@ import { StubEntries } from './archive/archive-entry-model';
 import { StubsConfig } from './stub-config-model';
 import { debug } from './utils/debug';
 import { resolve } from 'path';
+import { homedir } from 'os';
+import globby from 'globby';
 
 /**
  * Contract stubs plugin
@@ -27,23 +29,35 @@ export function contractStubsPlugin(on: Cypress.PluginEvents, config: Cypress.Pl
   const stubFiles = stubsConfig.filter((stub) => stub.mode === 'file');
   debug('stubs:file', `${stubFiles.length} archive files configured`);
 
-  stubFiles.forEach((stubConfig) => {
-    const archivePath = resolve(stubConfig.path, stubConfig.file);
-    debug('stubs:file', `Search file stub ${archivePath}`);
+  stubFiles.forEach(async (stubConfig) => {
+    const archivePattern = stubConfig.path
+      ? resolve(stubConfig.path, stubConfig.file)
+      : resolve(homedir(), config.env.stubs_maven_repo || '.m2/repository', '**', stubConfig.file);
 
-    archiveMapping(archivePath)
-      .then((stubs) => appendStubEntries(stubs, stubConfig.file))
-      .catch((error) => catchStubErrors(error));
+    debug('stubs:file', `Search file stub ${archivePattern}`);
+    const archivePath = (await globby(archivePattern)).shift();
+
+    if (archivePath) {
+      const stubs = await archiveMapping(archivePath);
+
+      appendStubEntries(stubs, stubConfig.file);
+    } else {
+      catchStubErrors(new Error(`No local stub found! ${stubConfig.file} ${archivePattern}`));
+    }
   });
 
   const stubRemotes = stubsConfig.filter((stub) => stub.mode === 'remote');
   debug('stubs:remote', `${stubRemotes.length} remote archives configured`);
 
-  stubRemotes.forEach((stubConfig) => {
-    remoteArtifact(stubConfig, config.env)
-      .then((stubPath) => archiveMapping(stubPath))
-      .then((stubs) => appendStubEntries(stubs, stubConfig.id))
-      .catch((error) => catchStubErrors(error));
+  stubRemotes.forEach(async (stubConfig) => {
+    try {
+      const stubPath = await remoteArtifact(stubConfig, config.env);
+      const stubs = await archiveMapping(stubPath);
+
+      appendStubEntries(stubs, stubConfig.id);
+    } catch (error) {
+      catchStubErrors(error);
+    }
   });
 
   on('task', {
@@ -55,7 +69,7 @@ export function contractStubsPlugin(on: Cypress.PluginEvents, config: Cypress.Pl
         }
       });
 
-      return stubs.length ? stubs[0] : null;
+      return stubs.length ? stubs[0] : undefined;
     }
   });
 }
