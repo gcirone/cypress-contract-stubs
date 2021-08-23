@@ -12,3 +12,13 @@ export interface StubEntry {
 }
 
 export type StubEntries = StubEntry[];
+
+export const stubEntries: StubEntries = [];
+
+export function storeStubEntries(stubs: StubEntries): void {
+  stubEntries.push(...stubs);
+}
+
+export function cleanStubEntries(): void {
+  stubEntries.splice(0, stubEntries.length);
+}

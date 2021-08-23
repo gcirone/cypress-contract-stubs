@@ -1,0 +1,6 @@
+{
+  "name": "cypress-contract-stubs/command",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "sideEffects": true
+}

@@ -1,22 +1,22 @@
 {
   "env": {
     "stubs_cache": "node_modules/.cache/stubs",
-    "stubs_server": "https://repo.latitc.corp-apps.com",
-    "stubs_repository": "maven-proxy-mal",
-    "stubs": [
+    "stubs_server": "http://localhost:8081",
+    "stubs_repository": "maven-releases",
+    "stubs_artifacts": [
       {
         "mode": "remote",
-        "id": "internal.sports.contracts:sports-translations-api:+:stubs",
+        "id": "internal.web:event-api-webapp:+:stubs",
         "type": "nexus",
-        "server": "https://repo.latitc.corp-apps.com",
-        "repository": "maven-proxy-mal"
+        "server": "http://localhost:8081",
+        "repository": "maven-releases"
       },
       {
         "mode": "remote",
-        "id": "internal.sports.contracts:sports-feed-mapping-api:+:stubs",
+        "id": "internal.sports.contracts:sports-translations-api:1.318:stubs",
         "type": "nexus",
-        "server": "https://repo.latitc.corp-apps.com",
-        "repository": "maven-proxy-mal"
+        "server": "http://localhost:8081",
+        "repository": "maven-releases"
       },
       {
         "mode": "file",

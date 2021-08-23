@@ -1,4 +1,4 @@
-import { StubEntries, StubEntry } from '../plugin/archive/archive-entry-model';
+import { StubEntries, StubEntry } from '../plugin/stubs/stubs-entries';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace

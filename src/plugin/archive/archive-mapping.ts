@@ -1,6 +1,6 @@
-import { ArchiveEntry, StubEntries, StubEntry } from './archive-entry-model';
+import { ArchiveEntry, StubEntries, StubEntry } from '../stubs/stubs-entries';
 import { list, readFile } from 'ls-archive';
-import { parse, extname } from 'path';
+import { extname, parse } from 'path';
 import { promisify } from 'util';
 
 /**
