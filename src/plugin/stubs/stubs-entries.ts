@@ -5,8 +5,8 @@ export interface ArchiveEntry {
 
 export interface StubEntry {
   id: string;
-  request: Record<string, any>;
-  response: Record<string, any>;
+  request: Record<string, any>; // eslint-disable-line
+  response: Record<string, any>; // eslint-disable-line
   uuid: string;
   name: string;
 }

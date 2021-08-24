@@ -7,6 +7,8 @@ services:
   sonatype-nexus3:
     container_name: nexus3
     image: sonatype/nexus3
+    environment:
+      - NEXUS_CONTEXT=/
     ports:
       - 8081:8081
     volumes:
@@ -15,6 +17,8 @@ services:
   sonatype-nexus:
     container_name: nexus
     image: sonatype/nexus:oss
+    environment:
+      - CONTEXT_PATH=/nexus
     ports:
       - 8181:8081
     volumes:

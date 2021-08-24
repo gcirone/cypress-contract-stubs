@@ -1,20 +1,34 @@
-import { configVars, RemoteStub } from '../stubs/stubs-config';
+import { configVars, RemoteStub, stubCoordinate } from '../stubs/stubs-config';
 import { debug } from '../utils/debug';
-import { nexus3Url } from './nexus3-url';
+import { nexus3Url, nexusUrl } from './nexus-url';
 import { basename, dirname, resolve } from 'path';
 import download from 'download';
 import globby from 'globby';
 import got from 'got';
 
 /**
- * Stub item request
+ * Stub item search request
  *
  * @param url
+ * @param config
  */
-async function stubItemRequest(url: string): Promise<{ path: string; downloadUrl: string } | void> {
+async function stubItemSearch(url: string, config: RemoteStub): Promise<{ path: string; downloadUrl: string } | void> {
   try {
     const response = await got(url.toString(), { json: true, retries: 0 });
-    return response.body.items.shift();
+
+    if (response.body?.data?.repositoryPath) {
+      // nexus response
+      const path = response.body.data.repositoryPath;
+      const server = config.server || configVars.server;
+      const repository = config.repository || configVars.repository;
+      const repositories = `${configVars.endpointNexusContext}/${configVars.endpointNexusRepos}`;
+      const downloadUrl = `${server}/${repositories}/${repository}/content/${path}`;
+
+      return { path, downloadUrl };
+    } else {
+      // nexus3 response
+      return response.body?.items?.shift();
+    }
   } catch (err) {
     debug('stubs:remote:error', err.message);
     return;
@@ -27,17 +41,19 @@ async function stubItemRequest(url: string): Promise<{ path: string; downloadUrl
  * @param config
  */
 export async function downloadArtifact(config: RemoteStub): Promise<string | void> {
-  const stubURL = nexus3Url(config);
-  debug('stubs:remote', `Search remote stub ${stubURL}`);
+  const { artifactId } = stubCoordinate(config.id);
 
-  const stubItem = await stubItemRequest(stubURL.toString());
+  const stubUrl = config.type === 'nexus' ? nexusUrl(config) : nexus3Url(config);
+
+  debug('stubs:remote', `Search remote stub ${stubUrl} (${config.type})`);
+  const stubItem = await stubItemSearch(stubUrl.toString(), config);
 
   const stubPattern = stubItem?.path
     ? resolve(`${configVars.cachePath}/${stubItem.path}`)
-    : resolve(`${configVars.cachePath}/**/*${stubURL.searchParams.get('name')}*`);
+    : resolve(`${configVars.cachePath}/**/*${artifactId}*`);
 
-  const stubPath: any = (await globby(stubPattern, { stats: true }))
-    .sort((a: any, b: any) => b.stats.ctime - a.stats.ctime)
+  const stubPath = (await globby(stubPattern, { objectMode: true, stats: true }))
+    .sort((a: any, b: any) => b.stats.ctime - a.stats.ctime) // eslint-disable-line
     .shift();
 
   if (stubPath) {

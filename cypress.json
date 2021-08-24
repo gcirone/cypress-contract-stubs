@@ -3,29 +3,36 @@
     "stubs_cache": "node_modules/.cache/stubs",
     "stubs_server": "http://localhost:8081",
     "stubs_repository": "maven-releases",
-    "stubs_artifacts": [
+    "stubs": [
       {
         "mode": "remote",
-        "id": "internal.web:event-api-webapp:+:stubs",
+        "id": "internal.contracts:event-api-webapp:+:stubs",
         "type": "nexus3",
         "server": "http://localhost:8081",
         "repository": "maven-releases"
       },
       {
         "mode": "remote",
-        "id": "internal.sports.contracts:sports-translations-api:1.318:stubs",
+        "id": "internal.contracts:translations-api:1.16:stubs",
         "type": "nexus3",
         "server": "http://localhost:8081",
         "repository": "maven-releases"
       },
       {
-        "mode": "local",
-        "file": "event-api-rest-webapp-stubs.jar",
-        "path": "cypress/fixtures"
+        "mode": "remote",
+        "id": "internal.contracts:site-config:+:stubs",
+        "type": "nexus",
+        "server": "http://localhost:8181",
+        "repository": "releases"
       },
       {
         "mode": "local",
         "file": "sports-site-config-1.318-SNAPSHOT-stubs.jar"
+      },
+      {
+        "mode": "local",
+        "file": "event-api-webapp-stubs.jar",
+        "path": "cypress/fixtures"
       }
     ]
   },
