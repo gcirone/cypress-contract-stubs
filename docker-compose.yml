@@ -5,12 +5,21 @@ version: '3.5'
 services:
 
   sonatype-nexus3:
-    container_name: nexus
+    container_name: nexus3
     image: sonatype/nexus3
     ports:
       - 8081:8081
     volumes:
-      - nexus-data:/nexus-data
+      - nexus3-data:/nexus-data
+
+  sonatype-nexus:
+    container_name: nexus
+    image: sonatype/nexus:oss
+    ports:
+      - 8181:8081
+    volumes:
+      - nexus-data:/sonatype-work
 
 volumes:
+  nexus3-data:
   nexus-data:

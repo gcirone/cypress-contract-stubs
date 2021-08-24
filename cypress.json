@@ -7,24 +7,24 @@
       {
         "mode": "remote",
         "id": "internal.web:event-api-webapp:+:stubs",
-        "type": "nexus",
+        "type": "nexus3",
         "server": "http://localhost:8081",
         "repository": "maven-releases"
       },
       {
         "mode": "remote",
         "id": "internal.sports.contracts:sports-translations-api:1.318:stubs",
-        "type": "nexus",
+        "type": "nexus3",
         "server": "http://localhost:8081",
         "repository": "maven-releases"
       },
       {
-        "mode": "file",
+        "mode": "local",
         "file": "event-api-rest-webapp-stubs.jar",
         "path": "cypress/fixtures"
       },
       {
-        "mode": "file",
+        "mode": "local",
         "file": "sports-site-config-1.318-SNAPSHOT-stubs.jar"
       }
     ]

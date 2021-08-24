@@ -1,10 +1,24 @@
 import { archiveMapping } from '../archive/archive-mapping';
 import { storeStubEntries } from './stubs-entries';
-import { localStubs, configVars } from './stubs-config';
+import { localStubs, configVars, LocalStub } from './stubs-config';
 import { debug, error } from '../utils/debug';
 import { resolve } from 'path';
 import { homedir } from 'os';
 import globby from 'globby';
+
+/**
+ * Search local files
+ *
+ * @param stubConfig
+ */
+async function searchStubFile(stubConfig: LocalStub) {
+  const archivePattern = stubConfig.path
+    ? resolve(stubConfig.path, stubConfig.file)
+    : resolve(homedir(), configVars.mavenRepo, '**', stubConfig.file);
+
+  debug('stubs:local', `Search local stub ${archivePattern}`);
+  return (await globby(archivePattern)).shift();
+}
 
 /**
  * Get all local stubs entries
@@ -14,12 +28,7 @@ export function getLocalStubs(): void {
 
   localStubs.forEach(async (stubConfig) => {
     try {
-      const archivePattern = stubConfig.path
-        ? resolve(stubConfig.path, stubConfig.file)
-        : resolve(homedir(), configVars.mavenRepo, '**', stubConfig.file);
-
-      debug('stubs:local', `Search local stub ${archivePattern}`);
-      const archivePath = (await globby(archivePattern)).shift();
+      const archivePath = await searchStubFile(stubConfig);
 
       if (archivePath) {
         const stubs = await archiveMapping(archivePath);

@@ -7,7 +7,7 @@ export interface LocalStub {
 export interface RemoteStub {
   id: string;
   mode?: 'remote';
-  type?: 'nexus';
+  type?: 'nexus' | 'nexus3';
   server?: string;
   repository?: string;
 }
@@ -26,7 +26,7 @@ export let configVars: {
 
 export function parseConfiguration(env: Record<string, any>): void {
   const stubs = Array.isArray(env.stubs_artifacts) ? env.stubs_artifacts : [];
-  localStubs = stubs.filter((stub) => stub.mode === 'file');
+  localStubs = stubs.filter((stub) => stub.mode === 'local');
   remoteStubs = stubs.filter((stub) => stub.mode === 'remote');
 
   configVars = {

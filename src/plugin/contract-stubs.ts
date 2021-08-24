@@ -29,7 +29,7 @@ export function contractStubsPlugin(on: Cypress.PluginEvents, config: Cypress.Pl
         }
       });
 
-      return stubs.length ? stubs[0] : undefined;
+      return stubs.length ? stubs[0] : null;
     }
   });
 }

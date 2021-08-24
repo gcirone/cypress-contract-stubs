@@ -13,9 +13,10 @@ import got from 'got';
  */
 async function stubItemRequest(url: string): Promise<{ path: string; downloadUrl: string } | void> {
   try {
-    const response = await got(url.toString(), { json: true });
+    const response = await got(url.toString(), { json: true, retries: 0 });
     return response.body.items.shift();
   } catch (err) {
+    debug('stubs:remote:error', err.message);
     return;
   }
 }
@@ -44,10 +45,7 @@ export async function downloadArtifact(config: RemoteStub): Promise<string | voi
     return stubPath.path;
   } else if (stubItem?.downloadUrl) {
     debug('stubs:remote', `Download remote stub ${config.id} ${stubItem.downloadUrl}`);
-    const downloadConfig = {
-      directory: dirname(stubPattern),
-      filename: basename(stubPattern)
-    };
+    const downloadConfig = { directory: dirname(stubPattern), filename: basename(stubPattern), retries: 0 };
     await download(stubItem.downloadUrl, downloadConfig.directory, downloadConfig);
 
     debug('stubs:remote', `Stub downloaded at ${stubPattern}`);
