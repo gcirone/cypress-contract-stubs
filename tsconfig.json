@@ -20,7 +20,7 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "cypress-contract-stubs": ["src/index.ts"],
-      "cypress-contract-stubs/command": ["src/command/index.ts"]
+      "cypress-contract-stubs/commands": ["src/commands/index.ts"]
     }
   },
   "include": ["src"]

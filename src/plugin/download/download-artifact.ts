@@ -1,6 +1,6 @@
 import { configVars, RemoteStub, stubCoordinate } from '../stubs/stubs-config';
 import { debug } from '../utils/debug';
-import { nexus3Url, nexusUrl } from './nexus-url';
+import { nexus3Url, nexusDownloadUrl, nexusUrl } from './nexus-url';
 import { basename, dirname, resolve } from 'path';
 import download from 'download';
 import globby from 'globby';
@@ -17,16 +17,10 @@ async function stubItemSearch(url: string, config: RemoteStub): Promise<{ path: 
     const response = await got(url.toString(), { json: true, retries: 0 });
 
     if (response.body?.data?.repositoryPath) {
-      // nexus response
       const path = response.body.data.repositoryPath;
-      const server = config.server || configVars.server;
-      const repository = config.repository || configVars.repository;
-      const repositories = `${configVars.endpointNexusContext}/${configVars.endpointNexusRepos}`;
-      const downloadUrl = `${server}/${repositories}/${repository}/content/${path}`;
-
+      const downloadUrl = nexusDownloadUrl(path, config).toString();
       return { path, downloadUrl };
     } else {
-      // nexus3 response
       return response.body?.items?.shift();
     }
   } catch (err) {
@@ -59,7 +53,9 @@ export async function downloadArtifact(config: RemoteStub): Promise<string | voi
   if (stubPath) {
     debug('stubs:remote', `Stub available at ${stubPath.path}`);
     return stubPath.path;
-  } else if (stubItem?.downloadUrl) {
+  }
+
+  if (stubItem?.downloadUrl) {
     debug('stubs:remote', `Download remote stub ${config.id} ${stubItem.downloadUrl}`);
     const downloadConfig = { directory: dirname(stubPattern), filename: basename(stubPattern), retries: 0 };
     await download(stubItem.downloadUrl, downloadConfig.directory, downloadConfig);

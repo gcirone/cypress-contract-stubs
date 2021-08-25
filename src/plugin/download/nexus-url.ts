@@ -4,7 +4,7 @@ import { configVars, RemoteStub, stubCoordinate } from '../stubs/stubs-config';
  * Nexus Repository Manager 3
  * https://help.sonatype.com/repomanager3/rest-and-integration-api/search-api
  *
- * @param config
+ * @param config Remote stub configuration
  */
 export function nexus3Url(config: RemoteStub): URL {
   const { groupId, artifactId, version, classifier } = stubCoordinate(config.id);
@@ -30,7 +30,7 @@ export function nexus3Url(config: RemoteStub): URL {
  * Nexus Repository Manager 2
  * https://repository.sonatype.org/nexus-restlet1x-plugin/default/docs/path__artifact_maven_content.html
  *
- * @param config
+ * @param config Remote stub configuration
  */
 export function nexusUrl(config: RemoteStub): URL {
   const { groupId, artifactId, version, classifier } = stubCoordinate(config.id);
@@ -50,4 +50,17 @@ export function nexusUrl(config: RemoteStub): URL {
   }
 
   return url;
+}
+
+/**
+ * Generate download url
+ *
+ * @param path Repository path
+ * @param config Remote stub configuration
+ */
+export function nexusDownloadUrl(path: string, config: RemoteStub): URL {
+  const repository = config.repository || configVars.repository;
+  const repositories = `${configVars.endpointNexusContext}/${configVars.endpointNexusRepos}`;
+
+  return new URL(`${repositories}/${repository}/content/${path}`, config.server || configVars.server);
 }

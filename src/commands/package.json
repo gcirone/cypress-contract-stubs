@@ -1,5 +1,5 @@
 {
-  "name": "cypress-contract-stubs/command",
+  "name": "cypress-contract-stubs/commands",
   "main": "index.js",
   "types": "index.d.ts",
   "sideEffects": true

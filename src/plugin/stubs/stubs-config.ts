@@ -47,7 +47,7 @@ export function parseConfiguration(env: Record<string, any>): void {
     endpointNexus3Context: env.stubs_endpoint_nexus3_context || '',
     endpointNexus: env.stubs_endpoint_nexus || 'service/local/artifact/maven/resolve',
     endpointNexusRepos: env.stubs_endpoint_nexus || 'service/local/repositories',
-    endpointNexusContext: env.stubs_endpoint_nexus_context || 'nexus'
+    endpointNexusContext: env.stubs_endpoint_nexus_context || ''
   };
 }
 
