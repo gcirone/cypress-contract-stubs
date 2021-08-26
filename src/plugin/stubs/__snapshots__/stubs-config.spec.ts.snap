@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StubConfig Test should parse plugin configuration variables 1`] = `
+Object {
+  "cachePath": "dist/stubs",
+  "endpointNexus": "service/proxy/artifact/maven/resolve",
+  "endpointNexus3": "service/rest/v2/search/assets",
+  "endpointNexus3Context": "nexus3",
+  "endpointNexusContext": "nexus",
+  "endpointNexusRepositories": "proxy/service/local/repositories",
+  "mavenRepository": "maven/.m2/repository",
+  "repository": "main-releases",
+  "server": "http://127.0.0.1:3333",
+}
+`;
+
+exports[`StubConfig Test should return default configuration variables 1`] = `
+Object {
+  "cachePath": "node_modules/.cache/stubs",
+  "endpointNexus": "service/local/artifact/maven/resolve",
+  "endpointNexus3": "service/rest/v1/search/assets",
+  "endpointNexus3Context": "",
+  "endpointNexusContext": "",
+  "endpointNexusRepositories": "service/local/repositories",
+  "mavenRepository": ".m2/repository",
+  "repository": "maven-releases",
+  "server": "http://localhost:8081",
+}
+`;

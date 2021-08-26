@@ -2,10 +2,10 @@
 
 exports[`NexusUrl Test when Nexus repository manager should return the download url 1`] = `"http://localhost:8081/service/local/repositories/maven-releases/content/internal/path/stub.jar"`;
 
-exports[`NexusUrl Test when Nexus repository manager should return the url with fixed version 1`] = `"http://localhost:8081/service/local/artifact/maven/resolve?r=maven-releases&g=test.group&a=test-artifact&c=class&p=jar&v=1.2"`;
+exports[`NexusUrl Test when Nexus repository manager should return the url with fixed version 1`] = `"http://localhost:8081/service/local/artifact/maven/resolve?r=maven-releases&g=test.group&a=test-artifact&c=stubs&p=jar&v=1.2"`;
 
-exports[`NexusUrl Test when Nexus repository manager should return the url with latest version 1`] = `"http://localhost:8081/service/local/artifact/maven/resolve?r=maven-releases&g=test.group&a=test-artifact&c=class&p=jar&v=LATEST"`;
+exports[`NexusUrl Test when Nexus repository manager should return the url with latest version 1`] = `"http://localhost:8081/service/local/artifact/maven/resolve?r=maven-releases&g=test.group&a=test-artifact&c=stubs&p=jar&v=LATEST"`;
 
-exports[`NexusUrl Test when Nexus3 repository manager should return the url with fixed version 1`] = `"http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases&group=test.group&name=test-artifact&maven.classifier=class&maven.extension=jar&version=1.2"`;
+exports[`NexusUrl Test when Nexus3 repository manager should return the url with fixed version 1`] = `"http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases&group=test.group&name=test-artifact&maven.classifier=stubs&maven.extension=jar&version=1.2"`;
 
-exports[`NexusUrl Test when Nexus3 repository manager should return the url with latest version 1`] = `"http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases&group=test.group&name=test-artifact&maven.classifier=class&maven.extension=jar&sort=version"`;
+exports[`NexusUrl Test when Nexus3 repository manager should return the url with latest version 1`] = `"http://localhost:8081/service/rest/v1/search/assets?repository=maven-releases&group=test.group&name=test-artifact&maven.classifier=stubs&maven.extension=jar&sort=version"`;

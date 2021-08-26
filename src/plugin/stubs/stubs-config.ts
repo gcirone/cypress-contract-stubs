@@ -12,16 +12,16 @@ export interface RemoteStub {
   repository?: string;
 }
 
-export let configVars: {
-  mavenRepo: string;
-  cachePath: string;
-  server: string;
-  repository: string;
-  endpointNexus3: string;
-  endpointNexus3Context: string;
-  endpointNexus: string;
-  endpointNexusContext: string;
-  endpointNexusRepos: string;
+export let configVars = {
+  mavenRepository: '.m2/repository',
+  cachePath: 'node_modules/.cache/stubs',
+  server: 'http://localhost:8081',
+  repository: 'maven-releases',
+  endpointNexus3: 'service/rest/v1/search/assets',
+  endpointNexus3Context: '',
+  endpointNexus: 'service/local/artifact/maven/resolve',
+  endpointNexusRepositories: 'service/local/repositories',
+  endpointNexusContext: ''
 };
 
 export let localStubs: LocalStub[] = [];
@@ -39,15 +39,15 @@ export function parseConfiguration(env: Record<string, any>): void {
   remoteStubs = stubs.filter((stub) => stub.mode === 'remote');
 
   configVars = {
-    mavenRepo: env.stubs_maven_repo || '.m2/repository',
-    cachePath: env.stubs_cache_path || 'node_modules/.cache/stubs',
-    server: env.stubs_server || 'http://localhost:8081',
-    repository: env.stubs_repository || 'maven-releases',
-    endpointNexus3: env.stubs_endpoint_nexus3 || 'service/rest/v1/search/assets',
-    endpointNexus3Context: env.stubs_endpoint_nexus3_context || '',
-    endpointNexus: env.stubs_endpoint_nexus || 'service/local/artifact/maven/resolve',
-    endpointNexusRepos: env.stubs_endpoint_nexus || 'service/local/repositories',
-    endpointNexusContext: env.stubs_endpoint_nexus_context || ''
+    mavenRepository: env.stubs_maven_repo || configVars.mavenRepository,
+    cachePath: env.stubs_cache_path || configVars.cachePath,
+    server: env.stubs_server || configVars.server,
+    repository: env.stubs_repository || configVars.repository,
+    endpointNexus3: env.stubs_endpoint_nexus3 || configVars.endpointNexus3,
+    endpointNexus3Context: env.stubs_endpoint_nexus3_context || configVars.endpointNexus3Context,
+    endpointNexus: env.stubs_endpoint_nexus || configVars.endpointNexus,
+    endpointNexusRepositories: env.stubs_endpoint_nexus_repos || configVars.endpointNexusRepositories,
+    endpointNexusContext: env.stubs_endpoint_nexus_context || configVars.endpointNexusContext
   };
 }
 

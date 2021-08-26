@@ -1,12 +1,9 @@
-import { expect } from '@jest/globals';
 import { nexus3Url, nexusDownloadUrl, nexusUrl } from './nexus-url';
-import { parseConfiguration } from '../stubs/stubs-config';
+import { expect } from '@jest/globals';
 
 describe('NexusUrl Test', () => {
-  const fixedVersionId = 'test.group:test-artifact:1.2:class';
-  const latestVersionId = 'test.group:test-artifact:+:class';
-
-  beforeEach(() => parseConfiguration({}));
+  const fixedVersionId = 'test.group:test-artifact:1.2:stubs';
+  const latestVersionId = 'test.group:test-artifact:+:stubs';
 
   describe('when Nexus3 repository manager', () => {
     it('should return the url with fixed version', () => {

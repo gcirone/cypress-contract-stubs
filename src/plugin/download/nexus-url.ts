@@ -60,7 +60,7 @@ export function nexusUrl(config: RemoteStub): URL {
  */
 export function nexusDownloadUrl(path: string, config: RemoteStub): URL {
   const repository = config.repository || configVars.repository;
-  const repositories = `${configVars.endpointNexusContext}/${configVars.endpointNexusRepos}`;
+  const repositories = `${configVars.endpointNexusContext}/${configVars.endpointNexusRepositories}`;
 
   return new URL(`${repositories}/${repository}/content/${path}`, config.server || configVars.server);
 }
