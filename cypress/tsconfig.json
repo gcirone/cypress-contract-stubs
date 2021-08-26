@@ -3,7 +3,8 @@
   "compilerOptions": {
     "sourceMap": false,
     "noEmitOnError": true,
-    "allowJs": true
+    "allowJs": true,
+    "types": ["cypress", "node", "cypress-contract-stubs/commands"]
   },
   "include": ["**/*.ts"]
 }
