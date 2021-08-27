@@ -1,4 +1,4 @@
-name: Contract Stubs
+name: contract-stubs
 on:
   push:
     branches: [ master ]
