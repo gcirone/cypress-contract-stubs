@@ -92,9 +92,10 @@ jobs:
 
       - name: Updload Coverage
         uses: codecov/codecov-action@v2
-        if: ${{ matrix.node-scripts == 'test }}
+        if: ${{ matrix.node-scripts == 'test' }}
         with:
           files: ./coverage/unit-results.xml
+          ail_ci_if_error: true
 
   deploy:
     needs: tests
