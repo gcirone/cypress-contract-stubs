@@ -90,6 +90,12 @@ jobs:
       - name: Run script ${{ matrix.node-scripts }}
         run: yarn ${{ matrix.node-scripts }}
 
+      - name: Updload Coverage
+        uses: codecov/codecov-action@v2
+        if: ${{ matrix.node-scripts == 'test }}
+        with:
+          files: ./coverage/unit-results.xml
+
   deploy:
     needs: tests
     runs-on: ubuntu-latest
