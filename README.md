@@ -64,7 +64,7 @@ Add configuration for remote or local stubs to your Cypress configuration.
 }
 ```
 
-#### Use cy commands
+### Use cy commands
 
 Add it to your support file:
 

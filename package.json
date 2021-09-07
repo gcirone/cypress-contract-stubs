@@ -27,9 +27,9 @@
     "cy:run:watch": "export DEBUG=cypress:stubs:*; nodemon --exec \"cypress run\" --watch src -e ts",
     "bump:version:src": "yarn version --new-version=$npm_package_version --no-git-tag-version --cwd src",
     "bump:version": "yarn version --no-git-tag-version",
-    "pre-release": "run-p test e2e build",
+    "prerelease": "run-p test e2e build",
     "release": "run-s bump:version bump:version:src copy:json",
-    "post-release": "git push origin --tags",
+    "postrelease": "git push origin --tags",
     "lint": "eslint --ext .js,.ts src",
     "format:write": "prettier --write src",
     "format:check": "prettier --check src"
