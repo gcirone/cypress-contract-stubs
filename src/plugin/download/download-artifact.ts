@@ -1,6 +1,7 @@
 import { configVars, RemoteStub, stubCoordinate } from '../stubs/stubs-config';
 import { logger } from '../utils/debug';
 import { nexus3Url, nexusDownloadUrl, nexusUrl } from './nexus-url';
+import { filePattern } from '../utils/file-pattern';
 import { basename, dirname, resolve } from 'path';
 import download from 'download';
 import globby from 'globby';
@@ -41,9 +42,11 @@ export async function downloadArtifact(config: RemoteStub): Promise<string | voi
   logger.debug('stubs:remote', `Search remote stub ${stubUrl} (${config.type})`);
   const stubItem = await stubItemSearch(stubUrl.toString(), config);
 
-  const stubPattern = stubItem?.path
-    ? resolve(`${configVars.cachePath}/${stubItem.path}`)
-    : resolve(`${configVars.cachePath}/**/*${artifactId}*`);
+  const stubPattern = filePattern(
+    stubItem?.path
+      ? resolve(`${configVars.cachePath}/${stubItem.path}`)
+      : resolve(`${configVars.cachePath}/**/*${artifactId}*`)
+  );
 
   const stubPath = (await globby(stubPattern, { objectMode: true, stats: true }))
     .sort((a: any, b: any) => b.stats.ctime - a.stats.ctime) // eslint-disable-line
