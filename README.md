@@ -74,14 +74,14 @@ Add it to your support file:
 import 'cypress-contract-stubs/commands';
 ```
 
-In your test files will available the following commands:
+In your test files, will be available the following commands:
 
 - `cy.contractStubs` Get all available stub entries
 - `cy.contractStub` Get stub entry by options
 
 ```javascript
-cy.contractStubs().should((stubs) => console.log(stubs));
-cy.contractStub({ name: 'stubName' }).should((stub) => console.log(stub));
+cy.contractStubs().then((stubs) => console.log(stubs));
+cy.contractStub({ name: 'stubName' }).then((stub) => console.log(stub));
 ```
 
 ## License
