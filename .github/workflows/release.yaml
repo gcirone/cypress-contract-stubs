@@ -116,8 +116,7 @@ jobs:
 
       - name: Publish package
         run: |
-          #yarn publish --tag latest --access public --non-interactive
-          cat package.json
+          yarn publish --tag latest --access public --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
