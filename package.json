@@ -1,6 +1,6 @@
 {
   "name": "cypress-contract-stubs",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Cypress plugin for Spring Contract Stubs",
   "repository": "https://github.com/gcirone/cypress-contract-stubs.git",
   "author": "Gianluca Cirone <gianluca.cirone@gmail.com>",
@@ -29,8 +29,10 @@
     "bump:version": "yarn version --no-git-tag-version",
     "prerelease": "run-p test e2e build",
     "release": "run-s bump:version bump:version:src copy:json",
-    "postrelease": "git commit -am \"Release v$npm_package_version\" && git tag v$npm_package_version && git push --follow-tags",
-    "echo": "echo $npm_package_version",
+    "postrelease": "run-s git:commit git:tag git:push",
+    "git:commit": "git commit -am \"Release v$npm_package_version\"",
+    "git:tag": "git tag -a -m \"Release v$npm_package_version\" v$npm_package_version",
+    "git:push": "git push --follow-tags",
     "lint": "eslint --ext .js,.ts src",
     "format:write": "prettier --write src",
     "format:check": "prettier --check src"
