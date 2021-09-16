@@ -1,6 +1,6 @@
 {
   "name": "cypress-contract-stubs",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Cypress plugin for Spring Contract Stubs",
   "main": "index.js",
   "types": "index.d.ts",
