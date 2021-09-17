@@ -36,7 +36,7 @@ export let remoteStubs: RemoteStub[] = [];
 export function parseConfiguration(env: Record<string, any>): void {
   const stubs = Array.isArray(env.stubs) ? env.stubs : [];
   localStubs = stubs.filter((stub) => stub.mode === 'local');
-  remoteStubs = stubs.filter((stub) => stub.mode === 'remote');
+  remoteStubs = stubs.filter((stub) => stub.mode === undefined || stub.mode === 'remote');
 
   configVars = {
     mavenRepository: env.stubs_maven_repo || configVars.mavenRepository,

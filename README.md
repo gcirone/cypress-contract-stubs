@@ -52,7 +52,7 @@ Add configuration for remote or local stubs to your Cypress configuration.
       {
         "mode": "remote",
         "id": "internal.contracts:artifact-name:+:stubs",
-        "server": "http://localhost:8081",
+        "server": "http://nexus3.proxy.internal",
         "repository": "maven-releases"
       },
       {

@@ -13,7 +13,7 @@
   },
   "keywords": [
     "cypress",
-    "plugin",
+    "cypress-plugin",
     "contract",
     "stub",
     "nexus"

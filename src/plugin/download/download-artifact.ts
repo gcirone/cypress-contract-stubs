@@ -1,7 +1,7 @@
 import { configVars, RemoteStub, stubCoordinate } from '../stubs/stubs-config';
 import { logger } from '../utils/debug';
 import { nexus3Url, nexusDownloadUrl, nexusUrl } from './nexus-url';
-import { filePattern } from '../utils/file-pattern';
+import { filePattern, workdir } from '../utils/file-pattern';
 import { basename, dirname, resolve } from 'path';
 import download from 'download';
 import globby from 'globby';
@@ -44,8 +44,8 @@ export async function downloadArtifact(config: RemoteStub): Promise<string | voi
 
   const stubPattern = filePattern(
     stubItem?.path
-      ? resolve(`${configVars.cachePath}/${stubItem.path}`)
-      : resolve(`${configVars.cachePath}/**/*${artifactId}*`)
+      ? resolve(workdir(), `${configVars.cachePath}/${stubItem.path}`)
+      : resolve(workdir(), `${configVars.cachePath}/**/*${artifactId}*`)
   );
 
   const stubPath = (await globby(stubPattern, { objectMode: true, stats: true }))
