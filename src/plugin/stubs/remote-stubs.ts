@@ -22,7 +22,7 @@ export async function getRemoteStubs(): Promise<void> {
       } else {
         logger.error(`No remote stub found! ${stubConfig.id}`);
       }
-    } catch (err) {
+    } catch (err: any) {
       logger.error(err);
     }
   }

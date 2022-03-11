@@ -24,7 +24,7 @@ async function stubItemSearch(url: string, config: RemoteStub): Promise<{ path: 
     } else {
       return response.body?.items?.shift();
     }
-  } catch (err) {
+  } catch (err: any) {
     logger.debug('stubs:remote:error', err.message);
     return;
   }

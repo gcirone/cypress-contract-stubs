@@ -33,7 +33,7 @@ export function contractStubs(): Cypress.Chainable<StubEntries> {
 }
 
 export function contractStub(options: Cypress.StubOptions): Cypress.Chainable<StubEntry | null> {
-  return cy.task<StubEntry>('contract:stub', options, { log: false }).then((stub) => {
+  return cy.task<StubEntry | null>('contract:stub', options, { log: false }).then((stub) => {
     Cypress.log({
       name: 'contractStub',
       displayName: 'stub',

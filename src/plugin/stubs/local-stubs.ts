@@ -41,7 +41,7 @@ export async function getLocalStubs(): Promise<void> {
       } else {
         logger.error(`No local stub found! ${stubConfig.file}`);
       }
-    } catch (err) {
+    } catch (err: any) {
       logger.error(err);
     }
   }
