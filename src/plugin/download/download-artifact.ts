@@ -39,7 +39,7 @@ export async function downloadArtifact(config: RemoteStub): Promise<string | voi
   const stubUrl = config.type === 'nexus' ? nexusUrl(config) : nexus3Url(config);
   const { artifactId } = stubCoordinate(config.id);
 
-  logger.debug('stubs:remote', `Search remote stub ${stubUrl} (${config.type})`);
+  logger.debug('stubs:remote', `Search remote stub ${stubUrl} (${config.type || 'nexus3'})`);
   const stubItem = await stubItemSearch(stubUrl.toString(), config);
 
   const stubPattern = filePattern(

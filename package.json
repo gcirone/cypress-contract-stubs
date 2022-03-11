@@ -41,7 +41,7 @@
     "src"
   ],
   "dependencies": {
-    "cypress": "^7.7.0"
+    "cypress": "^9.5.0"
   },
   "devDependencies": {
     "@types/download": "^8.0.1",

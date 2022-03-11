@@ -7,15 +7,16 @@ import { logger } from '../utils/debug';
 /**
  * Get all remote stubs entries
  */
-export function getRemoteStubs(): void {
+export async function getRemoteStubs(): Promise<void> {
   logger.debug('stubs:remote', `${remoteStubs.length} remote stubs configured`);
 
-  remoteStubs.forEach(async (stubConfig) => {
+  for (const stubConfig of remoteStubs) {
     try {
       const archivePath = await downloadArtifact(stubConfig);
 
       if (archivePath) {
         const stubs = await archiveMapping(archivePath);
+
         logger.debug('stubs:entries', `${stubs.length} stubs found in ${stubConfig.id}`);
         storeStubEntries(stubs);
       } else {
@@ -24,5 +25,5 @@ export function getRemoteStubs(): void {
     } catch (err) {
       logger.error(err);
     }
-  });
+  }
 }

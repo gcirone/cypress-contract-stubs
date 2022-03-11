@@ -7,7 +7,6 @@
       {
         "mode": "remote",
         "id": "internal.contracts:event-api-webapp:+:stubs",
-        "type": "nexus3",
         "server": "http://localhost:8081",
         "repository": "maven-releases"
       },

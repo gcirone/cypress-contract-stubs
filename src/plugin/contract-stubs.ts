@@ -9,15 +9,18 @@ import { stubEntries } from './stubs/stubs-entries';
  * @param on
  * @param config
  */
-export function contractStubsPlugin(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions): void {
+export async function contractStubsPlugin(
+  on: Cypress.PluginEvents,
+  config: Cypress.PluginConfigOptions
+): Promise<void> {
   // Parse initial configuration
   parseConfiguration(config.env);
 
   // Get local stubs
-  getLocalStubs();
+  await getLocalStubs();
 
   // Get remote stubs
-  getRemoteStubs();
+  await getRemoteStubs();
 
   // Setup stub tasks
   on('task', {

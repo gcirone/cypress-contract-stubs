@@ -26,10 +26,10 @@ async function searchStubFile(stubConfig: LocalStub) {
 /**
  * Get all local stubs entries
  */
-export function getLocalStubs(): void {
+export async function getLocalStubs(): Promise<void> {
   logger.debug('stubs:local', `${localStubs.length} local stubs configured`);
 
-  localStubs.forEach(async (stubConfig) => {
+  for (const stubConfig of localStubs) {
     try {
       const archivePath = await searchStubFile(stubConfig);
 
@@ -44,5 +44,5 @@ export function getLocalStubs(): void {
     } catch (err) {
       logger.error(err);
     }
-  });
+  }
 }

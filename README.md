@@ -15,7 +15,8 @@
   </a>
 </p>
 
-The **cypress-contract-stubs** adds support for using [Spring Cloud Contract Stub](https://spring.io/projects/spring-cloud-contract) entries when testing with Cypress.
+The **cypress-contract-stubs** adds support for using [Spring Cloud Contract Stub](https://spring.io/projects/spring-cloud-contract) entries when testing with Cypress. 
+This plugin is able to download artifacts form **nexus** and **nexus3** artifact repository and cache the stubs in local for better runtime performance. 
 
 ## Get started
 
@@ -36,12 +37,16 @@ Add it to your plugin file:
 ```javascript
 const { contractStubsPlugin } = require('cypress-contract-stubs');
 
-module.exports = (on, config) => {
-  contractStubsPlugin(on, config);
+module.exports = async (on, config) => {
+  await contractStubsPlugin(on, config);
+  
+  return config;
 }
 ```
 
-Add configuration for remote or local stubs to your Cypress configuration.
+Add configuration for remote and local stubs to your Cypress configuration.
+
+The default *mode* is `remote` and the default *type* is `nexus3`
 
 `cypress.json`
 
@@ -52,12 +57,25 @@ Add configuration for remote or local stubs to your Cypress configuration.
       {
         "mode": "remote",
         "id": "internal.contracts:artifact-name:+:stubs",
+        "type": "nexus3",
         "server": "http://nexus3.proxy.internal",
         "repository": "maven-releases"
       },
       {
+        "mode": "remote",
+        "id": "internal.contracts:artifact-name:+:stubs",
+        "type": "nexus",
+        "server": "http://nexus.proxy.internal",
+        "repository": "releases"
+      },
+      {
         "mode": "local",
         "file": "artifact-name-1.318-SNAPSHOT-stubs.jar"
+      },
+      {
+        "mode": "local",
+        "file": "artifact-name-stubs.jar",
+        "path": "cypress/fixtures"
       }
     ]
   }
@@ -77,7 +95,7 @@ import 'cypress-contract-stubs/commands';
 In your test files, will be available the following commands:
 
 - `cy.contractStubs` Get all available stub entries
-- `cy.contractStub` Get stub entry by options
+- `cy.contractStub` Get stub entry by options (if more stubs match the criteria will be returned the first occurrence)
 
 ```javascript
 cy.contractStubs().then((stubs) => console.log(stubs));
