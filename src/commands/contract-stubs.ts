@@ -5,10 +5,9 @@ declare global {
   namespace Cypress {
     interface StubOptions {
       name?: string;
+      method?: string;
       url?: string;
-      method?: HttpMethod;
       status?: number;
-      consumer?: string;
     }
 
     interface Chainable {

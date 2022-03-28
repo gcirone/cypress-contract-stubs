@@ -1,7 +1,7 @@
 import { configVars, localStubs, parseConfiguration, remoteStubs } from './stubs-config';
 
 describe('StubConfig Test', () => {
-  const stubs = [{ mode: 'remote' }, { mode: 'local' }, { mode: 'remote' }];
+  const stubs = [{ mode: 'remote' }, { mode: 'local', file: 'file.jar' }, { mode: 'remote' }];
 
   const customVars = {
     stubs_maven_repo: 'maven/.m2/repository',

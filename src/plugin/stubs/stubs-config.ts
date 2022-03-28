@@ -1,6 +1,6 @@
 export interface LocalStub {
   file: string;
-  mode?: 'local';
+  mode: 'local';
   path?: string;
 }
 
@@ -32,11 +32,10 @@ export let remoteStubs: RemoteStub[] = [];
  *
  * @param env
  */
-// eslint-disable-next-line
 export function parseConfiguration(env: Record<string, any>): void {
   const stubs = Array.isArray(env.stubs) ? env.stubs : [];
-  localStubs = stubs.filter((stub) => stub.mode === 'local');
-  remoteStubs = stubs.filter((stub) => stub.mode === undefined || stub.mode === 'remote');
+  localStubs = stubs.filter((stub) => stub.file && stub.mode === 'local');
+  remoteStubs = stubs.filter((stub) => (stub.id && stub.mode === undefined) || stub.mode === 'remote');
 
   configVars = {
     mavenRepository: env.stubs_maven_repo || configVars.mavenRepository,

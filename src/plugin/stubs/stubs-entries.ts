@@ -13,8 +13,16 @@ export interface StubEntry {
 
 export type StubEntries = StubEntry[];
 
+/**
+ * Array containing all stubs entries
+ */
 export const stubEntries: StubEntries = [];
 
+/**
+ * Append stub entries
+ *
+ * @param stubs
+ */
 export function storeStubEntries(stubs: StubEntries): void {
   stubEntries.push(...stubs);
 }
