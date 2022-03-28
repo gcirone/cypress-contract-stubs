@@ -1,7 +1,7 @@
-import nodeDebug from 'debug';
+import debug from 'debug';
 
 function debugLog(type: string, ...args: unknown[]): void {
-  nodeDebug(`cypress:${type}`)(...args);
+  debug(`cypress:${type}`)(type, ...args);
 }
 
 function errorLog(error: string | ErrorEvent): void {

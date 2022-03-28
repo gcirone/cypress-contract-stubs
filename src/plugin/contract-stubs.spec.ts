@@ -2,13 +2,12 @@ import { contractStubsPlugin } from './contract-stubs';
 import { parseConfiguration } from './stubs/stubs-config';
 import { getLocalStubs } from './stubs/local-stubs';
 import { getRemoteStubs } from './stubs/remote-stubs';
-import { expect, jest } from '@jest/globals';
 
 jest.mock('./stubs/stubs-config');
 jest.mock('./stubs/local-stubs');
 jest.mock('./stubs/remote-stubs');
 
-describe('Contract Stubs', () => {
+describe('Contract Stubs Plugin', () => {
   const on = jest.fn();
   const config = { env: { a: true } };
 

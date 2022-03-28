@@ -1,7 +1,5 @@
-import { expect, jest } from '@jest/globals';
 import { downloadArtifact } from './download-artifact';
 import { RemoteStub } from '../stubs/stubs-config';
-import cloneDeep from 'lodash.clonedeep';
 import download from 'download';
 import globby from 'globby';
 import got from 'got';
@@ -14,12 +12,6 @@ describe('DownloadArtifact Test', () => {
   const path = 'internal/location/stub.jar';
   const cachePath = `cache/folder/${path}`;
   const stubConfig: RemoteStub = { id: 'test.group:test-artifact:1.2:stubs', type: 'nexus3' };
-  const nexus3Response = { items: [{ path, downloadUrl: `http://server/repos/${path}` }] };
-  const nexusResponse = { data: { repositoryPath: path } };
-  const globbyResponse = [
-    { path: cachePath.replace('stub', 'stub-old'), stats: { ctime: 0 } },
-    { path: cachePath, stats: { ctime: 1 } }
-  ];
 
   describe('when download from nexus3', () => {
     it('should perform the search request correctly', () => {
@@ -79,14 +71,22 @@ describe('DownloadArtifact Test', () => {
   });
 
   async function whenDownloadArtifact(isNexus3: boolean, globFound = true, gotSuccess = true) {
+    const nexus3Response = { items: [{ path, downloadUrl: `http://server/repos/${path}` }] };
+    const nexusResponse = { data: { repositoryPath: path } };
+
+    const globbyResponse = [
+      { path: cachePath.replace('stub', 'stub-old'), stats: { ctime: 0 } },
+      { path: cachePath, stats: { ctime: 1 } }
+    ];
+
     if (gotSuccess) {
       const gotResponse = isNexus3 ? { body: nexus3Response } : { body: nexusResponse };
-      (got as any).mockResolvedValue(cloneDeep(gotResponse));
+      (got as any).mockResolvedValue(gotResponse);
     } else {
       (got as any).mockRejectedValue('error');
     }
 
-    (globby as any).mockResolvedValue(globFound ? cloneDeep(globbyResponse) : []);
+    (globby as any).mockResolvedValue(globFound ? globbyResponse : []);
     (download as any).mockResolvedValue();
 
     stubConfig.type = isNexus3 ? 'nexus3' : 'nexus';

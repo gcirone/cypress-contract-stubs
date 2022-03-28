@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contract Stubs Command #contractStub should return the stub founded 1`] = `
+Object {
+  "consoleProps": [Function],
+  "displayName": "stub",
+  "message": Array [
+    "stub found",
+    "a",
+  ],
+  "name": "contractStub",
+  "type": "parent",
+}
+`;
+
+exports[`Contract Stubs Command #contractStubs should return all stubs founded 1`] = `
+Object {
+  "consoleProps": [Function],
+  "displayName": "stubs",
+  "message": Array [
+    "2 stubs entries",
+  ],
+  "name": "contractStubs",
+  "type": "parent",
+}
+`;

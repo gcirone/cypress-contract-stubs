@@ -1,5 +1,4 @@
 import { nexus3Url, nexusDownloadUrl, nexusUrl } from './nexus-url';
-import { expect } from '@jest/globals';
 
 describe('NexusUrl Test', () => {
   const fixedVersionId = 'test.group:test-artifact:1.2:stubs';

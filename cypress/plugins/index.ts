@@ -14,7 +14,7 @@
 import { contractStubsPlugin } from 'cypress-contract-stubs';
 
 // eslint-disable-next-line no-unused-vars
-export default async function(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions): Promise<Cypress.PluginConfigOptions> {
+export default async function(on: Cypress.PluginEvents, config: Cypress.PluginConfigOptions): Promise<Cypress.ConfigOptions> {
   await contractStubsPlugin(on, config);
 
   return config;

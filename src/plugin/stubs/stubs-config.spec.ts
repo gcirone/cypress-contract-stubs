@@ -1,5 +1,4 @@
 import { configVars, localStubs, parseConfiguration, remoteStubs } from './stubs-config';
-import { expect } from '@jest/globals';
 
 describe('StubConfig Test', () => {
   const stubs = [{ mode: 'remote' }, { mode: 'local' }, { mode: 'remote' }];

@@ -2,10 +2,8 @@ import { archiveMapping } from '../archive/archive-mapping';
 import { parseConfiguration } from './stubs-config';
 import { getLocalStubs } from './local-stubs';
 import { logger } from '../utils/debug';
-import { expect, jest } from '@jest/globals';
-import cloneDeep from 'lodash.clonedeep';
-import globby from 'globby';
 import { stubEntries } from './stubs-entries';
+import globby from 'globby';
 
 jest.mock('../archive/archive-mapping');
 jest.mock('../utils/debug');
@@ -38,7 +36,7 @@ describe('LocalStubs Test', () => {
   });
 
   function whenGetLocalStubs(globbySuccess = true) {
-    (globby as any).mockResolvedValue(cloneDeep(globbySuccess ? [path] : []));
+    (globby as any).mockResolvedValue(globbySuccess ? [path] : []);
     (archiveMapping as any).mockResolvedValue([{ id: '1122' }]);
     getLocalStubs();
   }

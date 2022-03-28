@@ -4,7 +4,6 @@ import { parseConfiguration } from './stubs-config';
 import { getRemoteStubs } from './remote-stubs';
 import { stubEntries } from './stubs-entries';
 import { logger } from '../utils/debug';
-import { expect, jest } from '@jest/globals';
 
 jest.mock('../archive/archive-mapping');
 jest.mock('../download/download-artifact');

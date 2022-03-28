@@ -1,5 +1,4 @@
 import { archiveMapping } from './archive-mapping';
-import { expect, jest } from '@jest/globals';
 import * as ls from 'ls-archive';
 import * as util from 'util';
 

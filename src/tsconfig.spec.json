@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc",
+    "module": "commonjs",
+    "allowJs": true,
+    "types": ["jest", "cypress", "node"]
+  },
+  "files": ["test-setup.ts", "commands/index.ts"],
+  "include": ["**/*.test.ts", "**/*.spec.ts", "**/*.d.ts"]
+}
