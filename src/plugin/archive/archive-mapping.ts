@@ -1,5 +1,7 @@
 import { ArchiveEntry, StubEntries, StubEntry } from '../stubs/stubs-entries';
+import { promiseRetry } from '../utils/promise-retry';
 import { list, readFile } from 'ls-archive';
+import { logger } from '../utils/debug';
 import { extname, parse } from 'path';
 import { promisify } from 'util';
 
@@ -30,9 +32,22 @@ async function readJsonContent(archivePath: string, entry: ArchiveEntry): Promis
  * @returns A Promise for the completion of all stub entries.
  */
 export async function archiveMapping(archivePath: string): Promise<StubEntries> {
-  const entries = (await promisify(list)(archivePath))
-    .filter((entry: ArchiveEntry) => extname(entry.path) === '.json')
-    .map((entry: ArchiveEntry) => readJsonContent(archivePath, entry));
+  const entries: StubEntry[] = [];
 
-  return Promise.all(entries);
+  const archiveList = () => promisify(list)(archivePath);
+  const archiveEntries: ArchiveEntry[] = (await promiseRetry(archiveList, 100, 10)).filter(
+    (entry: ArchiveEntry) => extname(entry.path) === '.json'
+  );
+
+  for (const entry of archiveEntries) {
+    try {
+      const stubContent = () => readJsonContent(archivePath, entry);
+      const stubEntry = await promiseRetry(stubContent, 100, 10);
+      entries.push(stubEntry);
+    } catch (e) {
+      logger.error(`Archive not mapped "${entry.path}" ${e}`);
+    }
+  }
+
+  return entries;
 }

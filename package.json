@@ -11,7 +11,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "clean": "rm -rf dist/*",
+    "clean": "rm -rf dist/* && rm -rf node_modules/.cache/stubs",
     "tsc": "tsc -p src/tsconfig.lib.json",
     "copy:json": "cpx \"{src,src/commands}/package.json\" dist",
     "copy:misc": "cpx \"{README.md,LICENSE}\" dist",
