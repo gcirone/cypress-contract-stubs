@@ -3,10 +3,32 @@ export interface ArchiveEntry {
   type: number;
 }
 
+export interface StubMatcher {
+  equalTo?: string;
+  matches?: string;
+}
+
+export interface StubRequest {
+  method?: string;
+  url?: string;
+  urlPath?: string;
+  urlPattern?: string;
+  urlPathPattern?: string;
+  queryParameters?: Record<string, StubMatcher>;
+  headers?: Record<string, StubMatcher>;
+}
+
+export interface StubResponse {
+  status?: number;
+  body?: any;
+  headers?: Record<string, string>;
+  transformers?: string[];
+}
+
 export interface StubEntry {
   id: string;
-  request: Record<string, any>; // eslint-disable-line
-  response: Record<string, any>; // eslint-disable-line
+  request: StubRequest;
+  response: StubResponse;
   uuid: string;
   name: string;
 }

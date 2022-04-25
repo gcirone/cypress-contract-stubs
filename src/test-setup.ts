@@ -5,6 +5,8 @@ Object.assign(globalThis, {
     log: jest.fn()
   },
   cy: {
+    as: jest.fn().mockReturnThis(),
+    intercept: jest.fn().mockReturnThis(),
     task: jest.fn().mockResolvedValue(undefined)
   }
 });

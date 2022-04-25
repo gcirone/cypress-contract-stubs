@@ -1,7 +1,6 @@
 import { StubEntries, StubEntry } from '../plugin/stubs/stubs-entries';
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface StubOptions {
       name?: string;
@@ -11,8 +10,8 @@ declare global {
     }
 
     interface Chainable {
-      contractStubs: typeof contractStubs;
-      contractStub: typeof contractStub;
+      contractStubs(): Chainable<StubEntries>;
+      contractStub(options: StubOptions): Chainable<StubEntry | null>;
     }
   }
 }

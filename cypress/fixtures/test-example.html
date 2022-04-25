@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body onload="loadConfig()">
+
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl pb-2 text-gray-900">
+    Test Page
+  </h1>
+
+  <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="loadEvents()">
+    Load event
+  </button>
+
+  <section id="content1" class="p-2 mt-4 bg-gray-200 rounded">
+    &nbsp;
+  </section>
+
+  <section id="content2" class="p-2 mt-4 bg-gray-200 rounded">
+    &nbsp;
+  </section>
+</div>
+
+<script>
+  function loadConfig() {
+    fetch('/streamConfig')
+      .then((res) => res.json())
+      .then((data) => showContent('#content1', data))
+      .catch((e) => console.error(e));
+  }
+
+  function loadEvents() {
+    const url = '/v2/events/A/description/soccer';
+    const requestOptions = {
+      headers: { 'X-SITEID': 'site' }
+    };
+
+    fetch(url, requestOptions)
+      .then((res) => res.json())
+      .then((data) => showContent('#content2', data[0].events[0]))
+      .catch((e) => console.error(e));
+  }
+
+  function showContent(id, value) {
+    document.querySelector(id).innerHTML = `
+      <ul>
+      ${Object.keys(value).map((t) => `
+        <li class="p-1">${t}: <span class="text-gray-500">${value[t]}</span></li>
+      `).join('\n')}
+      </ul>
+    `;
+  }
+</script>
+
+</body>
+</html>
