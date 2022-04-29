@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Intercept Stubs Command #interceptStubs should intercept all request with stubs 1`] = `
+Object {
+  "headers": Object {
+    "h1": /\\.\\*/g,
+    "h2": "2",
+  },
+  "method": "POST",
+  "path": /\\\\/path\\\\/\\?\\.\\*other/g,
+  "query": Object {
+    "q1": "1",
+    "q2": /\\.\\*/g,
+  },
+}
+`;
+
+exports[`Intercept Stubs Command #interceptStubs should intercept only the named stubs 1`] = `
+Object {
+  "headers": Object {},
+  "method": "GET",
+  "query": Object {
+    "q1": "1",
+  },
+  "url": /\\.\\*/g,
+}
+`;

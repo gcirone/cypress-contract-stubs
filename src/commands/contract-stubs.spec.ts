@@ -1,8 +1,7 @@
 import { contractStubs, contractStub } from './contract-stubs';
+import { mockStubs } from './__mocks__/stubs.mocks';
 
 describe('Contract Stubs Command', () => {
-  const mockStubs = [{ name: 'a' }, { name: 'b' }];
-
   beforeEach(() => {
     jest.spyOn(cy, 'task').mockResolvedValueOnce(mockStubs).mockResolvedValueOnce(mockStubs[0]);
   });
