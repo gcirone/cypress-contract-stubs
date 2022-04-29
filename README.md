@@ -7,16 +7,20 @@
   <a href="https://github.com/gcirone/cypress-contract-stubs/actions">
     <img src="https://github.com/gcirone/cypress-contract-stubs/actions/workflows/release.yaml/badge.svg?style=shield" alt="Github Action">
   </a>
+  <a href="https://www.cypress.io/">
+    <img src="https://img.shields.io/badge/tested_with-cypress-162332.svg" alt="Cypress">
+  </a>  
   <a href="https://github.com/facebook/jest">
-    <img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Jest">
+    <img src="https://img.shields.io/badge/tested_with-jest-933e4c.svg" alt="Jest">
   </a>
   <a href="https://codecov.io/gh/gcirone/cypress-contract-stubs">
     <img src="https://codecov.io/gh/gcirone/cypress-contract-stubs/branch/master/graph/badge.svg" alt="Codecov" />
   </a>
 </p>
 
-The **cypress-contract-stubs** adds support for using [Spring Cloud Contract Stub](https://spring.io/projects/spring-cloud-contract) entries when testing with Cypress. 
-This plugin is able to download artifacts form **nexus** and **nexus3** artifact repository and cache the stubs in local for better runtime performance. 
+The **cypress-contract-stubs** add support for using [Spring Cloud Contract Stub](https://spring.io/projects/spring-cloud-contract) entries when testing with Cypress. 
+This plugin can download artifacts from **nexus** and **nexus3** artifact repositories and cache them locally. 
+Provide commands to automatically intercept application requests with stubs matched without the need of using the [stub runner](https://cloud.spring.io/spring-cloud-contract/1.2.x/multi/multi__spring_cloud_contract_stub_runner.html) server.
 
 ## Get started
 
@@ -28,11 +32,9 @@ Install the plugin by running:
 npm install --save-dev cypress-contract-stubs
 ```
 
-### Cypress Configuration
+### Plugin configuration
 
-Add it to your plugin file:
-
-`cypress/plugins/index.js`
+Add it to your plugin file: `cypress/plugins/index.js`
 
 ```javascript
 const { contractStubsPlugin } = require('cypress-contract-stubs');
@@ -44,22 +46,20 @@ module.exports = async (on, config) => {
 }
 ```
 
-Add configuration for remote and local stubs to your Cypress configuration.
+Add configuration for remote and local stubs to your `cypress.json` file.
 
-The default *mode* is `remote` and the default *type* is `nexus3`
-
-`cypress.json`
+The default *mode* is `remote` and the default *type* is `nexus3`. You can also configure default stub server and repository for the artifacts. 
 
 ```json
 {
   "env": {
+    "stubs_server": "http://nexus3.proxy.internal",
+    "stubs_repository": "maven-releases",
+    "stubs_cache": "node_modules/.cache/stubs",
+    "stubs_maven_repo": ".m2/repository",
     "stubs": [
       {
-        "mode": "remote",
-        "id": "internal.contracts:artifact-name:+:stubs",
-        "type": "nexus3",
-        "server": "http://nexus3.proxy.internal",
-        "repository": "maven-releases"
+        "id": "internal.contracts:artifact-name:+:stubs"
       },
       {
         "mode": "remote",
@@ -82,11 +82,11 @@ The default *mode* is `remote` and the default *type* is `nexus3`
 }
 ```
 
-### Use cy commands
+*Note: The plugin will download the latest artifact version if the `+` or `latest` is added to the stubs **id** coordinate*
 
-Add it to your support file:
+### Commands configuration
 
-`cypress/support/index.js`
+Add it to your support file: `cypress/support/index.js`
 
 ```javascript
 import 'cypress-contract-stubs/commands';
@@ -94,14 +94,77 @@ import 'cypress-contract-stubs/commands';
 
 In your test files, will be available the following commands:
 
+- `cy.interceptStubs` Intercept network requests with matched stubs
 - `cy.contractStubs` Get all available stub entries
 - `cy.contractStub` Get stub entry by options (if more stubs match the criteria will be returned the first occurrence)
 
 ```javascript
+cy.interceptStubs();
 cy.contractStubs().then((stubs) => console.log(stubs));
 cy.contractStub({ name: 'stubName' }).then((stub) => console.log(stub));
 ```
 
-## License
+## Intercept network request
 
-cypress-contract-stubs is [MIT licensed](./LICENSE).
+### Automatic intercept
+
+To automatically intercept network requests use:
+
+```javascript
+cy.interceptStubs(); // Intercpet all stub requests
+cy.interceptStubs(['stubName']); // Intercpet stub requests filtered by names
+
+cy.visit('/')
+```
+
+*The command setup an intercept for each stub present with the syntax defined in [WireMock documentation](https://wiremock.org/docs/stubbing/)*
+
+### Manual intercept
+
+To manually intercept network request use:
+
+```javascript
+cy.contractStub({ name: 'stubName' }).then((stub) => {
+  const { name, request, response } = stub;
+  
+  cy.intercept(request.url, (req) => {
+    req.reply(response.status, response.body, response.headers)
+  }).as(name);
+});
+
+cy.visit('/')
+```
+
+## Small print
+
+Author: Gianluca Cirone &lt;gianluca.cirone@gmail.com&gt; &copy; 2022
+
+- [@freshdevit](https://twitter.com/freshdevit)
+- [gianlucacirone](https://www.linkedin.com/in/gianlucacirone)
+
+License: MIT - do anything with the code, but don't blame me if it does not work.
+
+Support: if you find any problems with this module, email / tweet /
+[open an issue](https://github.com/gcirone/cypress-contract-stubs/issues) on Github
+
+## MIT License
+
+Copyright (c) 2022 Gianluca Cirone
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

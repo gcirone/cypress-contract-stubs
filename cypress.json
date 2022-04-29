@@ -5,10 +5,7 @@
     "stubs_repository": "maven-releases",
     "stubs": [
       {
-        "mode": "remote",
-        "id": "internal.contracts:event-api-webapp:+:stubs",
-        "server": "http://localhost:8081",
-        "repository": "maven-releases"
+        "id": "internal.contracts:event-api-webapp:+:stubs"
       },
       {
         "mode": "remote",

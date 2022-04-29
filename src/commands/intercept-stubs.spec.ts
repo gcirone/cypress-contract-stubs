@@ -28,7 +28,7 @@ describe('Intercept Stubs Command', () => {
     expect(cy.task).toHaveBeenCalledWith('contract:stubs', null, { log: false });
   });
 
-  it('#interceptStubs should intercept the requestd request with stubs', () => {
+  it('#interceptStubs should intercept the request with stubs', () => {
     interceptStubs(['b']);
 
     expect(cy.task).toHaveBeenCalledWith('contract:stubs', null, { log: false });
