@@ -14,9 +14,15 @@
   "keywords": [
     "cypress",
     "cypress-plugin",
+    "e2e",
+    "end-to-end",
+    "integration",
     "contract",
-    "stub",
-    "nexus"
+    "stubs",
+    "mocks",
+    "nexus",
+    "testing",
+    "spring-cloud"
   ],
   "peerDependencies": {
     "cypress": ">= 7.0.0"

@@ -55,8 +55,6 @@ The default *mode* is `remote` and the default *type* is `nexus3`. You can also 
   "env": {
     "stubs_server": "http://nexus3.proxy.internal",
     "stubs_repository": "maven-releases",
-    "stubs_cache": "node_modules/.cache/stubs",
-    "stubs_maven_repo": ".m2/repository",
     "stubs": [
       {
         "id": "internal.contracts:artifact-name:+:stubs"
@@ -111,8 +109,8 @@ cy.contractStub({ name: 'stubName' }).then((stub) => console.log(stub));
 To automatically intercept network requests use:
 
 ```javascript
-cy.interceptStubs(); // Intercpet all stub requests
-cy.interceptStubs(['stubName']); // Intercpet stub requests filtered by names
+cy.interceptStubs(); // Intercept all stub requests
+cy.interceptStubs(['stubName']); // Intercept stub requests filtered by names
 
 cy.visit('/')
 ```
@@ -134,6 +132,12 @@ cy.contractStub({ name: 'stubName' }).then((stub) => {
 
 cy.visit('/')
 ```
+
+## Debug
+
+Set an environment variable `DEBUG=cypress:stubs:*` to log all stubs plugin operations.
+
+Check the Cypress documentation for more info about [printing debug logs](https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs).
 
 ## Small print
 
