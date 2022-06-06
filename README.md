@@ -110,7 +110,7 @@ To automatically intercept network requests use:
 
 ```javascript
 cy.interceptStubs(); // Intercept all stub requests
-cy.interceptStubs(['stubName']); // Intercept stub requests filtered by names
+cy.interceptStubs({ names: ['stubNameA', 'stubNameB'] }); // Intercept stub requests filtered by names
 
 cy.visit('/')
 ```
@@ -151,24 +151,6 @@ License: MIT - do anything with the code, but don't blame me if it does not work
 Support: if you find any problems with this module, email / tweet /
 [open an issue](https://github.com/gcirone/cypress-contract-stubs/issues) on Github
 
-## MIT License
+## License
 
-Copyright (c) 2022 Gianluca Cirone
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+cypress-contract-stubs is [MIT licensed](./LICENSE).

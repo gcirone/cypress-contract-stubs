@@ -7,11 +7,12 @@ jest.mock('util');
 
 describe('ArchiveMapping Test', () => {
   const archivePath = '/path/archive/stub.jar';
-  const archiveList = [{ path: 'internal/location/stub.json' }];
+  const archiveList = [{ path: 'internal/consumer/stub.json' }];
   const archiveContent = JSON.stringify({
-    id: '123456',
+    id: 'ef4e991f-3ec4-4c04-8291-656f5a03e7fd',
     request: { url: 'url/stub' },
-    response: { body: JSON.stringify([{ value: true }]) }
+    response: { body: JSON.stringify([{ value: true }]) },
+    uuid: 'ef4e991f-3ec4-4c04-8291-656f5a03e7fd'
   });
 
   const promisified = jest.fn();

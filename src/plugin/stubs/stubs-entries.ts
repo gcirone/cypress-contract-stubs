@@ -31,6 +31,8 @@ export interface StubEntry {
   response: StubResponse;
   uuid: string;
   name: string;
+  consumer?: string;
+  priority?: number;
 }
 
 export type StubEntries = StubEntry[];

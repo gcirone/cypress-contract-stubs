@@ -3,10 +3,12 @@ import { StubEntries, StubEntry } from '../plugin/stubs/stubs-entries';
 declare global {
   namespace Cypress {
     interface StubOptions {
+      id?: string;
       name?: string;
       method?: string;
       url?: string;
       status?: number;
+      consumer?: string;
     }
 
     interface Chainable {

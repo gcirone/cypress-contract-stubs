@@ -2,7 +2,7 @@ import { ArchiveEntry, StubEntries, StubEntry } from '../stubs/stubs-entries';
 import { promiseRetry } from '../utils/promise-retry';
 import { list, readFile } from 'ls-archive';
 import { logger } from '../utils/debug';
-import { extname, parse } from 'path';
+import { extname, parse, basename } from 'path';
 import { promisify } from 'util';
 
 /**
@@ -13,9 +13,12 @@ import { promisify } from 'util';
  */
 async function readJsonContent(archivePath: string, entry: ArchiveEntry): Promise<StubEntry> {
   const fileContent = await promisify(readFile)(archivePath, entry.path);
-
   const stub = JSON.parse(fileContent.toString());
-  stub.name = parse(entry.path).name;
+
+  const stubPath = parse(entry.path);
+  stub.name = stubPath.name;
+  stub.consumer = basename(stubPath.dir);
+  stub.id = `${stub.name}:${stub.consumer}`;
 
   try {
     stub.response.body = JSON.parse(stub.response.body);

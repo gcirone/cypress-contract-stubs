@@ -24,21 +24,30 @@ describe('Intercept Stubs Command', () => {
 
     expect(cy.task).toHaveBeenCalledWith('contract:stubs', null, { log: false });
 
-    expect(cy.intercept).toHaveBeenCalledTimes(3);
+    expect(cy.intercept).toHaveBeenCalledTimes(5);
     expect((cy.intercept as jest.Mock).mock.calls[2][0]).toMatchSnapshot();
 
-    expect(reqReplySpy).toHaveBeenCalledTimes(3);
+    expect(reqReplySpy).toHaveBeenCalledTimes(5);
     expect(reqReplySpy).toHaveBeenNthCalledWith(3, 204, 'c', { hr: 'x' });
 
-    expect(asSpy).toHaveBeenCalledTimes(3);
+    expect(asSpy).toHaveBeenCalledTimes(5);
   });
 
   it('#interceptStubs should intercept only the named stubs', async () => {
-    await interceptStubs(['b']);
+    await interceptStubs({ names: ['b'] });
 
     expect(cy.task).toHaveBeenCalledWith('contract:stubs', null, { log: false });
     expect((cy.intercept as jest.Mock).mock.calls[0][0]).toMatchSnapshot();
 
-    expect(asSpy).toHaveBeenCalledWith('b');
+    expect(asSpy).toHaveBeenCalledWith('b:f119');
+  });
+
+  it('#interceptStubs should intercept only the named stubs with options', async () => {
+    await interceptStubs({ names: ['b'], headers: { tpl: 'tpl2' } });
+
+    expect(cy.intercept).toHaveBeenCalledTimes(2);
+    expect(asSpy).toHaveBeenCalledTimes(2);
+    expect(asSpy).toHaveBeenNthCalledWith(1, 'b:f119');
+    expect(asSpy).toHaveBeenNthCalledWith(2, 'b:5163');
   });
 });

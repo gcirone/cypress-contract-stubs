@@ -1,5 +1,6 @@
 export const mockStubs = [
   {
+    id: 'a:5885',
     name: 'a',
     request: {
       method: 'GET',
@@ -8,9 +9,41 @@ export const mockStubs = [
     },
     response: {
       body: 'a'
-    }
+    },
+    uuid: '6eb5d8c6-5885-428e-9286-0855791b9a60'
   },
   {
+    id: 'b:f0fa',
+    name: 'b',
+    request: {
+      method: 'GET',
+      urlPattern: '.*',
+      headers: { tpl: { equalTo: 'tpl1' } },
+      queryParameters: { q1: { equalTo: '1' } }
+    },
+    response: {
+      body: 'b'
+    },
+    uuid: '3c00bb6a-f0fa-41fd-8ab0-c579830e7db8',
+    priority: 1
+  },
+  {
+    id: 'b:5163',
+    name: 'b',
+    request: {
+      method: 'GET',
+      urlPattern: '.*',
+      headers: { tpl: { matches: 'tpl2' } },
+      queryParameters: { q1: { equalTo: '1' } }
+    },
+    response: {
+      body: 'b'
+    },
+    uuid: '9d58e8d3-5163-4d0e-81f9-4479740579c1',
+    priority: 1
+  },
+  {
+    id: 'b:f119',
     name: 'b',
     request: {
       method: 'GET',
@@ -18,10 +51,12 @@ export const mockStubs = [
       queryParameters: { q1: { equalTo: '1' } }
     },
     response: {
-      body: 'b'
-    }
+      body: 'b3'
+    },
+    uuid: '5f20fd44-f119-47fd-b475-53bf19d7f098'
   },
   {
+    id: 'c:f70c',
     name: 'c',
     request: {
       method: 'POST',
@@ -35,6 +70,7 @@ export const mockStubs = [
       headers: {
         hr: 'x'
       }
-    }
+    },
+    uuid: '68693422-f70c-4019-ab7f-d44329729495'
   }
 ];

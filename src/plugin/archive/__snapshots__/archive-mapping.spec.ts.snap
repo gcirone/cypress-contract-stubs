@@ -3,7 +3,8 @@
 exports[`ArchiveMapping Test should map all json stub entries 1`] = `
 Array [
   Object {
-    "id": "123456",
+    "consumer": "consumer",
+    "id": "stub:consumer",
     "name": "stub",
     "request": Object {
       "url": "url/stub",
@@ -15,6 +16,7 @@ Array [
         },
       ],
     },
+    "uuid": "ef4e991f-3ec4-4c04-8291-656f5a03e7fd",
   },
 ]
 `;

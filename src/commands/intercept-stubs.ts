@@ -1,19 +1,26 @@
 import type { RouteMatcherOptions } from 'cypress/types/net-stubbing';
-import type { StubEntries, StubRequest } from '../plugin/stubs/stubs-entries';
+import type { StubEntries, StubEntry, StubRequest } from '../plugin/stubs/stubs-entries';
 
 declare global {
   namespace Cypress {
+    interface InterceptStubsOptions {
+      names?: string[];
+      headers?: Record<string, any>;
+    }
+
     interface Chainable {
-      interceptStubs(stubNames?: string[]): Chainable<null>;
+      interceptStubs(options?: InterceptStubsOptions): Chainable<null>;
     }
   }
 }
 
-export function interceptStubs(stubNames?: string[]) {
+export function interceptStubs(options?: Cypress.InterceptStubsOptions) {
   cy.task<StubEntries>('contract:stubs', null, { log: false }).then((stubs) => {
     stubs
-      .filter(({ name }) => filterByStubNames(name, stubNames))
-      .forEach(({ name, request, response }) => {
+      .filter((stub) => filterByStubNames(stub.name, options?.names))
+      .filter((stub) => filterByStubOptions(stub, options))
+      .sort(sortByPriority)
+      .forEach(({ id, name, request, response }) => {
         try {
           const matcher: RouteMatcherOptions = { query: {}, headers: {} };
           matcher.method = request.method;
@@ -23,7 +30,7 @@ export function interceptStubs(stubNames?: string[]) {
 
           cy.intercept(matcher, (req) => {
             req.reply(response.status || 200, response.body, response.headers);
-          }).as(name);
+          }).as(id);
         } catch (e: any) {
           console.error(`Error when generating matcher for stub "${name}"`, e.message);
         }
@@ -37,6 +44,39 @@ function filterByStubNames(name: string, stubNames?: string[]) {
   } else {
     return true;
   }
+}
+
+function filterByStubOptions({ request }: StubEntry, options?: Cypress.InterceptStubsOptions) {
+  let shouldBeIntercepted = true;
+
+  for (const header in options?.headers) {
+    const optionsValue = options?.headers[header];
+    const stubValue = request.headers?.[header];
+
+    if (stubValue?.equalTo) {
+      if (stubValue.equalTo === optionsValue) {
+        delete request.headers?.[header];
+        shouldBeIntercepted = true;
+      } else {
+        shouldBeIntercepted = false;
+      }
+    } else if (stubValue?.matches) {
+      if (matchPattern(stubValue.matches).test(optionsValue)) {
+        delete request.headers?.[header];
+        shouldBeIntercepted = true;
+      } else {
+        shouldBeIntercepted = false;
+      }
+    }
+  }
+
+  return shouldBeIntercepted;
+}
+
+function sortByPriority(stubA: StubEntry, stubB: StubEntry): number {
+  const priorityA = stubA.priority || 0;
+  const priorityB = stubB.priority || 0;
+  return priorityA - priorityB;
 }
 
 function matchRequestUrl(request: StubRequest, matcher: RouteMatcherOptions) {
