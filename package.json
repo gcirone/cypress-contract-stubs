@@ -1,6 +1,6 @@
 {
   "name": "cypress-contract-stubs",
-  "version": "0.2.1",
+  "version": "0.5.0",
   "description": "Cypress plugin for Spring Contract Stubs",
   "repository": "https://github.com/gcirone/cypress-contract-stubs.git",
   "author": "Gianluca Cirone <gianluca.cirone@gmail.com>",
