@@ -29,6 +29,11 @@
         "mode": "local",
         "file": "event-api-webapp-stubs.jar",
         "path": "cypress/fixtures"
+      },
+      {
+        "mode": "local",
+        "file": "graphql-zero-stubs.jar",
+        "path": "cypress/fixtures"
       }
     ]
   },

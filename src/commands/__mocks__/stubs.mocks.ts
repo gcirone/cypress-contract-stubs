@@ -72,5 +72,32 @@ export const mockStubs = [
       }
     },
     uuid: '68693422-f70c-4019-ab7f-d44329729495'
+  },
+  {
+    id: 'd:c975',
+    name: 'd',
+    request: {
+      method: 'POST',
+      url: '/graphql',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.operationName',
+            equalTo: 'GetPost'
+          }
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.variables',
+            equalToJson: '{"id":1}'
+          }
+        }
+      ]
+    },
+    response: {
+      status: 200,
+      body: 'd'
+    },
+    uuid: '31f950d5-c975-4b1e-9fb0-4a07889c14c9'
   }
 ];

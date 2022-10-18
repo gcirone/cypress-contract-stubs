@@ -5,7 +5,9 @@ export interface ArchiveEntry {
 
 export interface StubMatcher {
   equalTo?: string;
+  equalToJson?: string;
   matches?: string;
+  expression?: string;
 }
 
 export interface StubRequest {
@@ -16,6 +18,7 @@ export interface StubRequest {
   urlPathPattern?: string;
   queryParameters?: Record<string, StubMatcher>;
   headers?: Record<string, StubMatcher>;
+  bodyPatterns?: { matchesJsonPath: StubMatcher }[];
 }
 
 export interface StubResponse {

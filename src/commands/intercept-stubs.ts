@@ -1,11 +1,13 @@
-import type { RouteMatcherOptions } from 'cypress/types/net-stubbing';
+import type { RouteMatcherOptions, CyHttpMessages } from 'cypress/types/net-stubbing';
 import type { StubEntries, StubEntry, StubRequest } from '../plugin/stubs/stubs-entries';
+import jsonpath from 'jsonpath';
 
 declare global {
   namespace Cypress {
     interface InterceptStubsOptions {
       names?: string[];
       headers?: Record<string, any>;
+      matchRequestHandler?: (request: CyHttpMessages.IncomingRequest) => boolean;
     }
 
     interface Chainable {
@@ -29,7 +31,24 @@ export function interceptStubs(options?: Cypress.InterceptStubsOptions) {
           matchRequestHeaders(request, matcher);
 
           cy.intercept(matcher, (req) => {
-            req.reply(response.status || 200, response.body, response.headers);
+            const replayWithStubResponse = () => {
+              const { status, body, headers } = response;
+              req.reply(status || 200, body, headers);
+            };
+
+            if (options?.matchRequestHandler) {
+              if (options.matchRequestHandler(req)) {
+                replayWithStubResponse();
+              }
+            } else {
+              if (request.bodyPatterns) {
+                if (matchRequestBody(request, JSON.parse(req.body))) {
+                  replayWithStubResponse();
+                }
+              } else {
+                replayWithStubResponse();
+              }
+            }
           }).as(id);
         } catch (e: any) {
           console.error(`Error when generating matcher for stub "${name}"`, e.message);
@@ -113,6 +132,23 @@ function matchRequestHeaders(request: StubRequest, matcher: RouteMatcherOptions)
       matcher.headers![header] = matchPattern(value.matches);
     }
   }
+}
+
+function matchRequestBody(request: StubRequest, body: any) {
+  const shouldReplyWithStub: boolean[] = [];
+  
+  for (const { matchesJsonPath } of request?.bodyPatterns || []) {
+    const { expression, equalTo, equalToJson } = matchesJsonPath;
+    const [value] = expression && jsonpath.query(body, expression);
+
+    if (equalTo && value) {
+      shouldReplyWithStub.push(equalTo === value);
+    } else if (equalToJson && value) {
+      shouldReplyWithStub.push(equalToJson === JSON.stringify(value));
+    }
+  }
+
+  return shouldReplyWithStub.every((r) => r);
 }
 
 function matchPattern(pattern: string) {

@@ -4,11 +4,12 @@ import { mockStubs } from './__mocks__/stubs.mocks';
 describe('Intercept Stubs Command', () => {
   const reqReplySpy = jest.fn();
   const asSpy = jest.fn();
+  let mockedBody: any;
 
   beforeEach(() => {
     jest.spyOn(cy, 'task').mockResolvedValueOnce(mockStubs);
     jest.spyOn<any, any>(cy, 'intercept').mockImplementation((_, response: any) => {
-      response({ reply: reqReplySpy });
+      response({ body: mockedBody, reply: reqReplySpy });
       return { as: asSpy };
     });
   });
@@ -49,5 +50,10 @@ describe('Intercept Stubs Command', () => {
     expect(asSpy).toHaveBeenCalledTimes(2);
     expect(asSpy).toHaveBeenNthCalledWith(1, 'b:f119');
     expect(asSpy).toHaveBeenNthCalledWith(2, 'b:5163');
+  });
+
+  it.only('#interceptStubs should intercept named stubs with body', async () => {
+    mockedBody = JSON.stringify({ operationName: 'GetPost', variables: { id: 1 } });
+    await interceptStubs({ names: ['d'] });
   });
 });

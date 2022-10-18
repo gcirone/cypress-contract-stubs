@@ -13,17 +13,22 @@
     Test Page
   </h1>
 
-  <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="loadEvents()">
-    Load event
+  <button id="load-events" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="loadEvents()">
+    Load events (rest)
   </button>
 
-  <section id="content1" class="p-2 mt-4 bg-gray-200 rounded">
-    &nbsp;
-  </section>
+  <button id="get-post" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="getPost()">
+    Get post (graphql)
+  </button>
 
-  <section id="content2" class="p-2 mt-4 bg-gray-200 rounded">
-    &nbsp;
-  </section>
+  <button id="update-post" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600" onclick="updatePost()">
+    Update post (graphql)
+  </button>
+
+  <section id="content1" class="p-2 mt-4 bg-gray-200 rounded">&nbsp;</section>
+  <section id="content2" class="p-2 mt-4 bg-gray-200 rounded">&nbsp;</section>
+  <section id="content3" class="p-2 mt-4 bg-gray-200 rounded">&nbsp;</section>
+  <section id="content4" class="p-2 mt-4 bg-gray-200 rounded">&nbsp;</section>
 </div>
 
 <script>
@@ -43,6 +48,43 @@
     fetch(url, requestOptions)
       .then((res) => res.json())
       .then((data) => showContent('#content2', data[0].events[0]))
+      .catch((e) => console.error(e));
+  }
+  
+  function getPost() {
+    const body = JSON.stringify({
+      operationName: 'GetPost',
+      query: `query GetPost($id: ID!) {
+        post(id: $id) {
+          id
+          title
+          body
+        }
+      }`,
+      variables: { id: 1 }
+    });
+    
+    fetch('/graphql', { method: 'POST', body })
+      .then((res) => res.json())
+      .then(({ data }) => showContent('#content3', data.post))
+      .catch((e) => console.error(e));
+  }
+
+  function updatePost() {
+    const body = JSON.stringify({
+      operationName: 'UpdatePost',
+      query: `mutation UpdatePost($id: ID!, $input: UpdatePostInput!) {
+        updatePost(id: $id, input: $input) {
+          id
+          body
+        }
+      }`,
+      variables: { id: 1, input: { body: 'Some updated content.' } }
+    });
+
+    fetch('/graphql', { method: 'POST', body })
+      .then((res) => res.json())
+      .then(({ data }) => showContent('#content4', data.updatePost))
       .catch((e) => console.error(e));
   }
 
