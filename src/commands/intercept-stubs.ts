@@ -83,11 +83,11 @@ function matchRequestUrl(request: StubRequest, matcher: RouteMatcherOptions) {
   if (request.url) {
     matcher.url = request.url;
   } else if (request.urlPath) {
-    matcher.path = request.urlPath;
+    matcher.pathname = request.urlPath;
   } else if (request.urlPattern) {
     matcher.url = matchPattern(request.urlPattern);
   } else if (request.urlPathPattern) {
-    matcher.path = matchPattern(request.urlPathPattern);
+    matcher.pathname = matchPattern(request.urlPathPattern);
   }
 }
 
