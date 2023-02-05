@@ -7,7 +7,7 @@ Object {
     "h2": "2",
   },
   "method": "POST",
-  "path": /\\\\/path\\\\/\\?\\.\\*other/g,
+  "pathname": /\\\\/path\\\\/\\?\\.\\*other/g,
   "query": Object {
     "q1": "1",
     "q2": /\\.\\*/g,
